@@ -1,5 +1,8 @@
 {
     "cSpell.words": [
+        "Chakra",
+        "douyinfe",
+        "gsap",
         "IERC",
         "ILSY",
         "LSYTOKEN",
@@ -8,6 +11,7 @@
         "sourcify",
         "unstake",
         "Unstaked",
+        "viem",
         "wagmi"
     ]
 }

@@ -7,16 +7,16 @@ import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
 interface ILSYToken {
-    function registerStakingPool(address) external;
     function TOKEN_PRICE() external view returns (uint256);
     function balanceOf(address) external view returns (uint256);
+    function registerStakingPool(address) external;
 }
 
 contract Staking is Ownable, ReentrancyGuard {
     using SafeERC20 for IERC20;
     IERC20 public immutable lsyToken;
-    uint256 public constant SCALE_FACTOR = 10 ** 18;        // 缩放因子
-    uint256 public constant REWARD_RATE = 0.1 * 10 ** 18;   // 10% APR（精度18位）年化利率
+    uint256 public constant DECIMALS = 18; //小数位
+    uint256 public constant REWARD_RATE = 0.1 * 10 ** 18; // 10% APR（精度18位）年化利率
     uint256 public constant SECONDS_PER_YEAR = 31536000 * 10 ** 18; // 1 year = 365*24*3600 secs
 
     uint256 public totalStakedAmount; // 总质押量
@@ -30,6 +30,20 @@ contract Staking is Ownable, ReentrancyGuard {
     }
     // 用户指向的质押记录
     mapping(address => UserStake) public userStakes;
+    struct StakingPoolDetails {
+        uint256 rewardRate; //质押年化利率 ADR
+        uint256 totalStakedAmount; //总质押量(wei)
+        uint256 totalUniqueStakers; //参与质押人数
+        uint256 tokenPrice; //货币单价(wei)
+        uint256 decimals; //缩放因子
+    }
+    struct UserStakeDetails {
+        uint256 balanceOf; // Your LSY Balance
+        uint256 totalAmount; // 用户质押量(wei)
+        uint256 pendingRewards; // Pending Rewards(wei) // 累计未领取的奖励(wei)
+        uint256 rewardsPerSec; // + 0 LSY per sec(wei) // 每秒的奖励(wei)
+        uint256 lastUpdateTime; // 最后更新时间戳(秒)
+    }
 
     event StakedLSY(address indexed user, uint256 amount); //质押操作
     event UnstakedLSY(address indexed user, uint256 amount); //解押操作
@@ -38,47 +52,32 @@ contract Staking is Ownable, ReentrancyGuard {
     constructor(address _lsyToken) Ownable(msg.sender) {
         lsyToken = IERC20(_lsyToken);
         ILSYToken(_lsyToken).registerStakingPool(address(this));
-        totalStakedAmount =  ILSYToken(_lsyToken).balanceOf(address(this));
-    }
-
-
-    struct StakingPoolDetails {
-        uint256 rewardRate;         //质押年化利率 ADR
-        uint256 totalStakedAmount;  //总质押量(wei)
-        uint256 totalUniqueStakers; //参与质押人数
-        uint256 tokenPrice;     //货币单价(wei)
-        uint256 scaleFactor;    //缩放因子
+        totalStakedAmount = ILSYToken(_lsyToken).balanceOf(address(this));
     }
 
     // 查询质押池详情
-    function getStakingPoolDetails() external view returns(StakingPoolDetails memory){
-        return StakingPoolDetails({
-            rewardRate: REWARD_RATE,
-            totalStakedAmount: ILSYToken(address(lsyToken)).balanceOf(address(this)),
-            totalUniqueStakers: totalUniqueStakers,
-            tokenPrice: ILSYToken(address(lsyToken)).TOKEN_PRICE(),
-            scaleFactor: SCALE_FACTOR
+    function getStakingPoolDetails() external view returns (StakingPoolDetails memory){
+      return
+        StakingPoolDetails({
+          rewardRate: REWARD_RATE,
+          totalStakedAmount: ILSYToken(address(lsyToken)).balanceOf(address(this)),
+          totalUniqueStakers: totalUniqueStakers,
+          tokenPrice: ILSYToken(address(lsyToken)).TOKEN_PRICE(),
+          decimals: DECIMALS
         });
-    }
-
-    struct UserStakeDetails {
-        uint256 balanceOf; // Your LSY Balance
-        uint256 totalAmount;  // Your Staked LSY(wei)  // 用户质押量(wei)
-        uint256 pendingRewards; // Pending Rewards(wei) // 累计未领取的奖励(wei) 
-        uint256 rewardsPerSec; // + 0 LSY per sec(wei) // 累计未领取的奖励(wei) 
-        uint256 lastUpdateTime; // 最后更新时间戳(秒)
     }
 
     // 查询某个用户的LSY拥有量 和 当前的质押信息
     function getUserStakeDetails(address _user) external view returns (UserStakeDetails memory) {
         UserStake storage _userStake = userStakes[_user];
-        return UserStakeDetails({
-            balanceOf:ILSYToken(address(lsyToken)).balanceOf(msg.sender),
-            totalAmount:_userStake.totalAmount,
-            pendingRewards:_userStake.pendingRewards,
-            rewardsPerSec:(_userStake.totalAmount * REWARD_RATE) / SECONDS_PER_YEAR,
-            lastUpdateTime:_userStake.lastUpdateTime
-        });
+        return
+            UserStakeDetails({
+              balanceOf: ILSYToken(address(lsyToken)).balanceOf(_user),
+              totalAmount: _userStake.totalAmount,
+              pendingRewards: _userStake.pendingRewards,
+              rewardsPerSec: (_userStake.totalAmount * REWARD_RATE) / SECONDS_PER_YEAR,
+              lastUpdateTime: _userStake.lastUpdateTime
+            });
     }
 
     // 动态更新奖励
@@ -119,7 +118,7 @@ contract Staking is Ownable, ReentrancyGuard {
         _updateRewards(msg.sender);
         UserStake storage stake = userStakes[msg.sender];
         require(_amountWei > 0, "amount must be greater than 0");
-        require(_amountWei <= stake.totalAmount,"amount must be less than total staked amount");
+        require( _amountWei <= stake.totalAmount, "amount must be less than total staked amount");
 
         stake.totalAmount -= _amountWei;
         totalStakedAmount -= _amountWei;

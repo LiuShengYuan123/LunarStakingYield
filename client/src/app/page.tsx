@@ -1,14 +1,30 @@
-'use client'
-import Body from "@/components/Body";
+"use client";
+import React, { Suspense } from "react";
+// 同步导入首屏必要组件
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import HeroModule from "@/components/HeroModule";
+import StarryBackground from "@/components/StarryBackground";
 
-export default function Home() {
+// 懒加载非首屏组件
+const PurchaseModule = React.lazy(() => import("@/components/PurchaseModule"))
+const StakingPoolModule = React.lazy(() => import("@/components/StakingPoolModule"))
+const StakeModule = React.lazy(() => import("@/components/StakeModule"))
+
+const Main = () => {
   return (
-    <div className="h-screen max-h-screen h-min-screen w-4/5 min-w-7xl mx-auto flex flex-col bg-[#FFFFFF] align-middle">
-      <Header />
-      <Body />
-      <Footer />
+    <div className="app-container">
+      <StarryBackground />  {/* 星星背景 */}
+      <Header />            {/* 钱包 */}
+      <HeroModule />        {/* 首页展示 */}
+
+
+      <Suspense fallback={<div className="text-[#f0f0f0]">Loading...</div>}>
+        <PurchaseModule />    {/* 购买模块 */}
+        <StakingPoolModule /> {/* 质押池详情模块 */}
+        <StakeModule />       {/* 质押模块 */}
+      </Suspense>
+      
     </div>
   );
-}
+};
+export default Main;
