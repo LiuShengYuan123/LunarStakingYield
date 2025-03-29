@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ConnectButton as WalletConnectButton }  from '@rainbow-me/rainbowkit';
 import { Affix,Alert } from 'antd';
 import Marquee from 'react-fast-marquee';
@@ -34,6 +34,7 @@ const Header = () => {
       console.error("添加代币失败:", error);
     }
   }
+
 
   return (
   <Affix offsetTop={0} style={{position:'fixed',top:0,width:'100%'}}>

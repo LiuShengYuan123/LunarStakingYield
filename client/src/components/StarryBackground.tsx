@@ -1,5 +1,5 @@
+'use client'
 import React from 'react'
-
 
 const style = {
   star:`absolute w-[2px] h-[2px] bg-white/80`,

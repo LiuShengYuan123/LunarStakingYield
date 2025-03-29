@@ -1,13 +1,12 @@
-// 'use client'
+'use client'
 import React, {useEffect} from "react";
 import Modal from "react-modal";
-import { css } from "@emotion/react";
 import { RingLoader } from "react-spinners"
 
 
 interface ModalProps {
   isLoading: boolean;    // 直接控制loading状态
-  parentRef: React.RefObject<null>;
+  parentRef: React.RefObject<HTMLDivElement | null>;
 }
 
 const _Modal = ({isLoading,parentRef}:ModalProps) => {
@@ -19,7 +18,7 @@ const _Modal = ({isLoading,parentRef}:ModalProps) => {
   return (
     <Modal 
       isOpen={isLoading} 
-      parentSelector={() => parentRef.current}
+      parentSelector={() => parentRef.current ? parentRef.current : document.body }
       style={{
         overlay:{
           position:'absolute',
@@ -53,16 +52,12 @@ const TransactionLoaderStyles = {
   title: `font-semibold text-xl mb-12`,
   detail: `font-semibold mb-12 text-xs my-12 text-gray-400`,
 };
-const cssOverride = css`
-  display: block;
-  margin: 0 auto;
-  border-color: white;
-`;
+
 const TransactionLoader = () => {
   return (
     <div className={TransactionLoaderStyles.wrapper}>
       <div className={TransactionLoaderStyles.title}>Transaction in progress...</div>
-      <RingLoader color={"#fff"} loading={true} css={cssOverride} size={50} />
+      <RingLoader color={"#fff"} loading={true}  size={50} />
       <div className={TransactionLoaderStyles.detail}>Estimated time: 30 seconds...</div>
     </div>
   );

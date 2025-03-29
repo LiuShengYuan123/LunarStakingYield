@@ -1,6 +1,6 @@
+'use client'
 import React, { useContext, useEffect, useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { AccountContext } from "@/context/AccountContext";
 import Image from "next/image";
 import price from "@/assets/price.png"
@@ -8,8 +8,6 @@ import apy from "@/assets/apy.png"
 import transaction from "@/assets/transaction.png"
 import user from "@/assets/user.png"
 
-// 注册 GSAP 插件
-gsap.registerPlugin(ScrollTrigger);
 
 const style = {
   areaCommon: `min-w-[400px] max-w-[300px] min-h-[230px] max-h-[230px] m-2 flex flex-col justify-between rounded-2xl p-10 `,

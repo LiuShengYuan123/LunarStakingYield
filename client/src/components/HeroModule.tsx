@@ -1,7 +1,7 @@
-// HeroSection.tsx
+'use client'
 import React, { useEffect, useRef , useState } from 'react';
 import gsap from 'gsap';
-import { Segmented ,ConfigProvider, theme } from 'antd';
+import { Segmented } from 'antd';
 import remarkGfm from 'remark-gfm';
 import ReactMarkdown from 'react-markdown';
 import Prism from "prismjs";
@@ -21,7 +21,6 @@ const style = {
   rightSection: `flex-1 h-[100vh] min-w-[60vh] pt-10 pb-20`,
   codeContainer: `max-h-full overflow-auto opacity-80 scrollbar scrollbar-none`,
 };
-
 
 const tokenContractText = `
 // SPDX-License-Identifier: MIT
@@ -385,17 +384,15 @@ const HeroModule = () => {
 
   const Nav = () =>{
     return(
-      <ConfigProvider theme={{algorithm: theme.darkAlgorithm}}>
-          <Segmented block size="large"
-            defaultValue={nav}
-            options={[
-              {label:'ERC20代币合约 💵',value:0},
-              {label:'质押流动合约 📈',value:1},
-              {label:'文档说明 📚',value:2},
-            ]} 
-            onChange={(value)=>{setNav(value)}}
-          />
-    </ConfigProvider>
+      <Segmented block size="large"
+        defaultValue={nav}
+        options={[
+          {label:'ERC20代币合约 💵',value:0},
+          {label:'质押流动合约 📈',value:1},
+          {label:'文档说明 📚',value:2},
+        ]} 
+        onChange={(value)=>{setNav(value)}}
+      />
     )
   }
 

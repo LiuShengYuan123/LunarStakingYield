@@ -1,3 +1,4 @@
+'use client'
 import {  Input, Row, Col } from 'antd';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { AccountContext } from '@/context/AccountContext';
@@ -5,14 +6,11 @@ import { useConnectModal } from "@rainbow-me/rainbowkit"
 import Decimal from 'decimal.js';
 import Modal from './Modal'
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-// 注册 GSAP 插件
-gsap.registerPlugin(ScrollTrigger);
 
 const style = {
-    wrapper: `min-w-[100vw] h-[80vh] mx-auto flex flex-col justify-center items-center relative overflow-hidden`,
-    title: `text-[20] font-normal`,
+    wrapper: `min-w-[100vw] h-[80vh] mx-auto mt-[20vh] flex flex-col justify-center items-center relative overflow-hidden`,
+    title:`min-h-[10vh] text-4xl font-bold mr-10 mb-10 bg-gradient-to-l from-[#f0f0f0] to-[#fade8e] text-transparent bg-clip-text`,
+    areaTitle: `text-[20] font-normal`,
     areaCommon:`w-[40vw] rounded-2xl p-6 bg-gradient-to-r from-[#03070eb3] to-[#07101fb3] m-1 text-[#f0f0f0] cursor-pointer border border-[#0a182f] transition-all duration-300`,
     areaHover: `w-[40vw] rounded-2xl p-6 bg-gradient-to-r from-[#03070eb3] to-[#0a182fb3] m-1 text-[#f0f0f0] cursor-pointer border border-[#0a182f]  transition-all duration-300 hover:scale-[1.02] hover:shadow-xl transform-gpu will-change-transform`,
     areaBlur:  `w-[40vw] rounded-2xl p-6 bg-gradient-to-r from-[#03070eb3] to-[#03070eb3] m-1 text-[#f0f0f0] cursor-pointer border border-[#0a182f]  transition-all duration-300 [&:active]:scale-95`,
@@ -25,7 +23,7 @@ const style = {
 const PurchaseModule = () => {
   const {openConnectModal}:any = useConnectModal()
   const {accountAddress,stakingPoolDetails,purchaseLSY,loadingStates,refreshKey} = useContext(AccountContext);
-  const purchaseModuleContainerRef = useRef(null)
+  const purchaseModuleContainerRef = useRef<HTMLDivElement>(null)
   const [areaState,setAreaState] = useState<any>({
     hoverArea:null,
     activeArea:'sell'
@@ -124,14 +122,16 @@ const PurchaseModule = () => {
   return (<>
     <div className={style.wrapper} id="purchase-module-container" ref={purchaseModuleContainerRef}>     
 
-      <h1 className='text-5xl font-bold mr-10 my-20  bg-gradient-to-l from-[#f0f0f0] to-[#fade8e] text-transparent bg-clip-text'>Join the Staking Revolution – Get Your First LSY Token!</h1>
+      <h1 className={style.title}>
+        Join the Staking Revolution – Get Your First LSY Token!
+      </h1>
 
       <div className={getAreaClass('sell')}
         onClick={()=>{handleAreaInteraction('sell','click')}}
         onMouseEnter={()=>{handleAreaInteraction('sell','hover')}}
         onMouseLeave={()=>{handleAreaInteraction('sell','leave')}}
       >
-        <p className={style.title}>Sell</p>        
+        <p className={style.areaTitle}>Sell</p>        
         <Row justify="space-between" align="middle" style={{marginBottom:'8px'}}>
           <Col span={20}>
             <Input value={inputValue.ethValue} variant='borderless' style={{fontSize: 36, fontWeight: 500,color:'#fff'}}
@@ -148,7 +148,7 @@ const PurchaseModule = () => {
         onMouseEnter={()=>{handleAreaInteraction('buy','hover')}}
         onMouseLeave={()=>{handleAreaInteraction('buy','leave')}}
       >
-        <p className={style.title}>Buy</p>        
+        <p className={style.areaTitle}>Buy</p>        
         <Row justify="space-between" align="middle" style={{marginBottom:'8px'}}>
           <Col span={20}>
             <Input value={inputValue.lsyValue} variant='borderless' style={{ fontSize: 36, fontWeight: 500,color:'#fff'}}

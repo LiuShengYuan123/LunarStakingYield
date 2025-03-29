@@ -1,9 +1,9 @@
+'use client'
 import Image from 'next/image'
 import React ,{ useContext, useEffect, useRef, useState } from 'react'
 import { useConnectModal } from "@rainbow-me/rainbowkit"
 import {Input} from "antd"
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import Modal from './Modal'
 import { AccountContext } from '@/context/AccountContext'
@@ -11,8 +11,7 @@ import lock from "@/assets/lock.png"
 import unlock from "@/assets/unlock.png"
 
 
-// 注册 GSAP 插件
-gsap.registerPlugin(ScrollTrigger);
+
 
 const style = {
   wrapper:`w-[100vw] h-[100vh] flex flex-row justify-center items-center`,
@@ -117,7 +116,7 @@ const StakeModule = () => {
       .to(unStakeContainer,{x:0,duration:0.5,ease:'elastic.out(1,0.3)'})
 
     return ()=>{
-      stakeTimeline.killTweensOf(stakeContainer)
+      stakeTimeline.kill()
       unStakeTimeline.kill()
     }
   },[])

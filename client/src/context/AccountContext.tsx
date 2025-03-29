@@ -36,7 +36,7 @@ export const AccountProvider = ({children}: {children: React.ReactNode}) => {
     lastUpdateTime: 0,
   })
   const decimals = 18;
-
+  
 
 
   useAccountEffect({
@@ -109,7 +109,6 @@ export const AccountProvider = ({children}: {children: React.ReactNode}) => {
 }
   // 授权 合约池操作当前用户的 ETH
   const approveStakeLSY = async (value:bigint) =>{
-    console.log('approveStakeLSY函数被调用了🐍🐍🐍')
     setLoadingStates(prev => ({...prev,approveStakeLSY:true}))
     try {
       const txHash = await writeContractAsync({
@@ -156,7 +155,6 @@ export const AccountProvider = ({children}: {children: React.ReactNode}) => {
         console.log('批准未通过，无法质押')
         return
       }
-      console.log('开始质押,isApprove:',isApprove)
       const txHash = await writeContractAsync({
         address:StakingContractConfig.address,
         abi:StakingContractConfig.abi,
@@ -295,7 +293,6 @@ export const AccountProvider = ({children}: {children: React.ReactNode}) => {
 
   // 交易成功后刷新数据
   useEffect(()=>{
-    console.log('交易成功后刷新数据🐟🐟🐟🐟🐟,refreshKey:',refreshKey)
     getStakingPoolDetails.refetch?.()
     getUserStakeDetails.refetch?.()
   },[refreshKey])

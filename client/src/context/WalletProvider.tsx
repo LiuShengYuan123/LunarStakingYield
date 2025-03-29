@@ -2,7 +2,7 @@ import React from "react";
 import "@rainbow-me/rainbowkit/styles.css";
 
 import { WagmiProvider } from "wagmi";
-import { mainnet, holesky, polygon, optimism, arbitrum, base } from "wagmi/chains";
+import { holesky, polygon, optimism, arbitrum, base } from "wagmi/chains";
 import { QueryClientProvider,QueryClient} from "@tanstack/react-query";
 import { getDefaultConfig, RainbowKitProvider,darkTheme } from "@rainbow-me/rainbowkit";
 
