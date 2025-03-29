@@ -37,7 +37,7 @@ const Header = () => {
 
 
   return (
-  <Affix offsetTop={0} style={{position:'fixed',top:0,width:'100%'}}>
+  <Affix offsetTop={0} style={{position:'fixed',top:0,width:'100%',zIndex:999}}>
     <Alert closable banner style={{backgroundColor:'transparent',color:'#f0f0f0'}}
     message={
       <Marquee pauseOnHover gradient={false} speed={200}>
