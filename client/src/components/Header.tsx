@@ -41,6 +41,7 @@ const Header = () => {
     <Alert closable banner style={{backgroundColor:'transparent',color:'#f0f0f0'}}
     message={
       <Marquee pauseOnHover gradient={false} speed={200}>
+        <div>
         💧目前此项目只支持Holesky测试网,点击 
         <a href="https://holesky-faucet.pk910.de/#/" target="_blank" rel="noopener noreferrer" className='mx-2'>这里</a>
         领取测试币💧
@@ -49,6 +50,7 @@ const Header = () => {
         <span className='mx-2 text-blue-400 cursor-pointer' onClick={()=>{addTokenToWallet()}}>添加</span> 
         到您的钱包中,💵代币合约地址: 
         <span className='mx-2'>{process.env.NEXT_PUBLIC_LSYTOKEN_ADDRESS}</span> 💵
+        </div>
       </Marquee>
     }
   />
