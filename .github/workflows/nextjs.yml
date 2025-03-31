@@ -57,6 +57,7 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
+          enablement: 'automatic'  # 自动启用 Pages
           static_site_generator: next
       - name: Restore cache
         uses: actions/cache@v4
