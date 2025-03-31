@@ -293,6 +293,10 @@ export const AccountProvider = ({children}: {children: React.ReactNode}) => {
 
   // 交易成功后刷新数据
   useEffect(()=>{
+    console.log('LSYTokenContractConfig:', LSYTokenContractConfig)
+    console.log('StakingContractConfig:', StakingContractConfig)
+    console.log('连接状态:', account.status)
+    console.log('账户地址:', accountAddress)
     getStakingPoolDetails.refetch?.()
     getUserStakeDetails.refetch?.()
   },[refreshKey])
