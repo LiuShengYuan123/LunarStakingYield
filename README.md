@@ -1,4 +1,4 @@
-# 🌌 LunarStakingYield (LSY) 星际质押协议白皮书
+# 🌌 LunarStakingYield (LSY) 星际质押协议白皮书[🚀 在线地址](https://stalwart-cucurucho-d974b4.netlify.app/)
 在以太坊链上书写人类的太空史诗：质押即星辰开采
 
 ## 1. 宇宙级愿景与经济哲学
@@ -98,3 +98,12 @@ function _updateRewards(address _user) internal {
 🌕 当您质押LSY时，您正在以太坊区块链上镌刻人类向宇宙深处探索的数字足迹。每一枚LSY代币都是通向月球经济的星际船票，每秒累积的收益皆来自虚拟宇宙的引力波能量场。
 
 本白皮书技术细节基于v1.0.0版本智能合约，未标注部分均为已验证实现功能。
+
+
+### 📮 作者联系地址  
+| 渠道           | 联系方式                          |
+|----------------|-----------------------------------|
+| 📧 Google邮箱   | shuweicao99@gmail.com            |
+| 🌟 WeChat       | a1574020265                      |
+| 🌟 Telegram     | @shuweicao99                 |
+| 📦 GitHub      | https://github.com/LiuShengYuan123 |

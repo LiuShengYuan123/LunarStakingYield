@@ -50,6 +50,10 @@ const Header = () => {
         <span className='mx-2 text-blue-400 cursor-pointer' onClick={()=>{addTokenToWallet()}}>添加</span> 
         到您的钱包中,💵代币合约地址: 
         <span className='mx-2'>{process.env.NEXT_PUBLIC_LSYTOKEN_ADDRESS}</span> 💵
+
+        <span className='ml-50'></span>
+        查看GitHub源码地址请点击
+        <a href="https://github.com/LiuShengYuan123/LunarStakingYield" target="_blank" rel="noopener noreferrer" className='mx-2'>这里</a>
         </div>
       </Marquee>
     }
