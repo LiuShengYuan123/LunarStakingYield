@@ -1,4 +1,6 @@
-# 🌌 LunarStakingYield (LSY) 星际质押协议白皮书[🚀 在线地址](https://stalwart-cucurucho-d974b4.netlify.app/)
+#### 在线浏览地址🚀 https://stalwart-cucurucho-d974b4.netlify.app
+
+# 🌌 LunarStakingYield (LSY) 星际质押协议白皮书
 在以太坊链上书写人类的太空史诗：质押即星辰开采
 
 ## 1. 宇宙级愿景与经济哲学
