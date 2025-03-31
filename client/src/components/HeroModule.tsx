@@ -450,7 +450,7 @@ const HeroModule = () => {
         </a>
       </div>
       {/* 右侧占位 */}
-      <div className={style.rightSection}>
+      <div className={style.rightSection} style={{zIndex:999}}>
         <Nav/>
         <div className={style.codeContainer}>
             {

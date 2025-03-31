@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { ConnectButton as WalletConnectButton }  from '@rainbow-me/rainbowkit';
 import { Affix,Alert } from 'antd';
 import Marquee from 'react-fast-marquee';
@@ -37,7 +37,7 @@ const Header = () => {
 
 
   return (
-  <Affix offsetTop={0} style={{position:'fixed',top:0,width:'100%',zIndex:999}}>
+  <Affix offsetTop={0} style={{position:'fixed',top:0,width:'100%',zIndex:2}}>
     <Alert closable banner style={{backgroundColor:'transparent',color:'#f0f0f0'}}
     message={
       <Marquee pauseOnHover gradient={false} speed={200}>
